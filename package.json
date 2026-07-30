@@ -5,11 +5,8 @@
   "description": "Simple drawing board web app",
   "main": "script.js",
   "scripts": {
-    "start": "vercel dev",
+    "start": "npx vercel dev",
     "build": "echo \"No build step\""
-  },
-  "dependencies": {
-    "vercel": "*"
   },
   "license": "MIT"
 }
