@@ -1,17 +1,19 @@
-const canvas = document.getElementById("paintCanvas");
-const ctx = canvas.getContext("2d");
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.getElementById("paintCanvas");
+  const ctx = canvas.getContext("2d");
+  const clearBtn = document.getElementById("clearBtn");
 
-let isDrawing = false;
-let brushColor = "black";
-let brushWidth = 5;
+  let isDrawing = false;
+  let brushColor = "black";
+  let brushWidth = 5;
 
-canvas.addEventListener("mousedown", (e) => {
+  canvas.addEventListener("mousedown", (e) => {
     isDrawing = true;
     ctx.beginPath();
     ctx.moveTo(e.offsetX, e.offsetY);
-});
+  });
 
-canvas.addEventListener("mousemove", (e) => {
+  canvas.addEventListener("mousemove", (e) => {
     if (!isDrawing) return;
 
     ctx.lineWidth = brushWidth;
@@ -20,32 +22,37 @@ canvas.addEventListener("mousemove", (e) => {
 
     ctx.lineTo(e.offsetX, e.offsetY);
     ctx.stroke();
-});
+  });
 
-canvas.addEventListener("mouseleave", () => {
+  canvas.addEventListener("mouseleave", () => {
     isDrawing = false;
-})
-canvas.addEventListener("mouseup", () => {
+  });
+
+  canvas.addEventListener("mouseup", () => {
     isDrawing = false;
+  });
+
+  canvas.addEventListener("mouseenter", () => {
+    console.log("You can draw now");
+  });
+
+  canvas.addEventListener("dblclick", () => {
+    const randomBg = `hsl(${Math.random() * 360},80%,90%)`;
+    canvas.style.backgroundColor = randomBg;
+  });
+
+  canvas.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+
+    const colors = ["red", "blue", "green", "pink", "white", "black", "yellow"];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+    brushColor = randomColor;
+    alert(`Brush color changed to : ${brushColor}`);
+  });
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+  }
 });
-canvas.addEventListener("mouseenter",()=>{
-    console.log("You can draw now")
-})
-
-canvas.addEventListener("dblclick",()=>{
-    const randomBg = `hsl(${Math.random()*360},80%,90%)`
-    canvas.style.backgroundColor = randomBg
-})
-
-canvas.addEventListener("contextmenu",(e)=>{
-    e.preventDefault()
-
-    const colors = ["red","blue","green","pink","white","black","yellow"]
-    const randomColor = colors[Math.floor(Math.random()*colors.length)] 
-    brushColor = randomColor
-    alert(`Brush color changed to : ${brushColor}`)
-})
-
-clearBtn.addEventListener("click",()=>{
-    ctx.clearRect(0,0,canvas.width,canvas.height)
-})
